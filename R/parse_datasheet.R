@@ -44,7 +44,7 @@ Comment <- function() {
 #'
 #' Parses a datasheet containing multiple data blocks.
 #' @return A parsed datasheet as a structured object.
-#' @export
+#' @noRd
 DataSheet <- function() {
   zero_or_more(CommentLike()) %then%
     one_or_more(DataBlock()) %then%
@@ -152,7 +152,7 @@ parse_tsv_line <- function(line) {
 #' Columns with empty names are removed, and empty values are replaced with `NA`.
 #' @param m A character matrix where the first row contains column headers.
 #' @return A tibble representing the data in the matrix.
-#' @export
+#' @noRd
 matrix_to_df <- function(m) {
   colnames <- m[1, ]
   non_empty_cols <- colnames != ""
@@ -160,4 +160,15 @@ matrix_to_df <- function(m) {
   colnames(values) <- colnames[non_empty_cols]
   values[values == ""] <- NA
   dplyr::as_tibble(values)
+}
+
+#' Parse a data sheet
+#'
+#' Parses tables from a data sheet and returns a list with named tables.
+#'
+#' @param sheet A character vector in which each element is a (tab-delimited) row from a data sheet
+#' @return A named list of `tibble` objects or an error message if the parser fails
+#' @export
+parse_sheet <- function(sheet) {
+  reporter(DataSheet())(sheet)
 }

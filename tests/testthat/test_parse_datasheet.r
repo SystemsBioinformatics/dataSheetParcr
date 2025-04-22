@@ -102,3 +102,27 @@ test_that("EmptyLine works correctly", {
   expect_equal(result$L[[1]], line2)
   expect_equal(class(EmptyLine()("\t\t not empty")), "marker")
 })
+
+# Test for read_sheet
+test_that("parse_sheet works correctly", {
+  sheet <- c(
+    "> some name",
+    "# some comment",
+    "a\tb",
+    "1\t2",
+    "3\t4",
+    "\t",
+    "# a comment in between\t",
+    "> another name",
+    "# another comment",
+    "x\ty",
+    "5\t6",
+    "7\t8",
+    "\t",
+    "\t"
+  )
+  result <- parse_sheet(sheet)
+  expect_equal(names(result), c("some name", "another name"))
+  expect_equal(names(result$`some name`), c("a", "b"))
+  expect_equal(names(result$`another name`), c("x", "y"))
+})
