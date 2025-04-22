@@ -126,3 +126,28 @@ test_that("parse_sheet works correctly", {
   expect_equal(names(result$`some name`), c("a", "b"))
   expect_equal(names(result$`another name`), c("x", "y"))
 })
+
+test_that("parse_sheet works correctly on the example in the readme", {
+  sheet <- c(
+    "# Comment rows start with a hash in the left most cell\t\t",
+    "# Blank lines are ignored, also if they contain tabs\t\t",
+    "# The name of a table is printed above a table behind the > symbol\t\t",
+    "# A table starts with a column header row in the left-most cell of a line\t\t",
+    "\t\t\t",
+    "> name_of_table\t\t",
+    "# more optional comments or blank lines",
+    "var1\tvar2\tvar3",
+    "1\t2\t3",
+    "4\t5\t6",
+    "\t\t\t",
+    "# more comments if needed\t\t",
+    "> other_table\t\t",
+    "var5\tvar6\tvar7",
+    "1\t2\t3",
+    "4\t5\t6"
+  )
+  result <- parse_sheet(sheet)
+  expect_equal(names(result), c("name_of_table", "other_table"))
+  expect_equal(names(result$name_of_table), c("var1", "var2", "var3"))
+  expect_equal(names(result$other_table), c("var5", "var6","var7"))
+})
