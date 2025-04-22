@@ -1,5 +1,18 @@
-A small R package that contains a parser for data sheets. It is currently used to parse our google sheets with the BioSB curriculum.
+---
+title: dataSheetParcr
+---
 
+A small R package that contains a parser for data sheets. It is currently used to parse our google sheets with the BioSB curriculum. The parser was constructed with the [`parcr`](https://cran.r-project.org/web/packages/parcr/index.html) package 
+
+## Installation
+
+Install with
+```r
+# install.packages("pak")
+pak::pak("SystemsBioinformatics/dataSheetParcr")
+```
+
+## Usage
 The package exports only one function: `parse_sheet()`, which parses one sheet and returns a list of named tables. The structure of a data sheet should be as follows
 
 ```
