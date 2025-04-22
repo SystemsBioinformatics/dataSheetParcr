@@ -11,14 +11,30 @@ The package exports only one function: `parse_sheet()`, which parses one sheet a
 > name_of_table
 # more optional comments or blank lines
 var1  var2  var3
-1 2 3
-4 5 6
+1     2     3
+4     5     6
 
 # more comments if needed
 > other_table
 var5  var6  var7
-1 2 3
-4 5 6
+1     2     3
+4     5     6
 ```
 
-This sheet will be parsed by `parse_sheet()` and returns a list object with two named `tibble` objects 
+This sheet will be parsed by `parse_sheet()` and returns a list object with two named `tibble` objects:
+
+```
+$name_of_table
+# A tibble: 2 × 3
+  var1  var2  var3 
+  <chr> <chr> <chr>
+1 1     2     3    
+2 4     5     6    
+
+$other_table
+# A tibble: 2 × 3
+  var5  var6  var7 
+  <chr> <chr> <chr>
+1 1     2     3    
+2 4     5     6    
+```
