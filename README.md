@@ -1,3 +1,7 @@
+<!-- badges: start -->
+  [![R-CMD-check](https://github.com/SystemsBioinformatics/dataSheetParcr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/SystemsBioinformatics/dataSheetParcr/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
 # dataSheetParcr
 
 A small R package that contains a parser for data sheets. It is currently used to parse our google sheets with the BioSB curriculum. The parser was constructed with the [`parcr`](https://CRAN.R-project.org/package=parcr) package
