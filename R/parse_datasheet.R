@@ -104,14 +104,7 @@ Header <- function() {
 #' @param line A character string representing a line from the datasheet.
 #' @return A parsed comment as a string or an empty list if parsing fails.
 #' @noRd
-parse_comment <- function(line) {
-  m <- stringr::str_match(line, comment_pattern)
-  if (is.na(m[1])) {
-    return(list()) # signal failure
-  } else {
-    return(m[2])
-  }
-}
+parse_comment <- stringparser(comment_pattern)
 
 #' Parse a Header Line
 #'
@@ -119,14 +112,7 @@ parse_comment <- function(line) {
 #' @param line A character string representing a line from the datasheet.
 #' @return A parsed header as a string or an empty list if parsing fails.
 #' @noRd
-parse_header <- function(line) {
-  m <- stringr::str_match(line, header_pattern)
-  if (is.na(m[1])) {
-    return(list()) # signal failure
-  } else {
-    return(stringr::str_trim(m[2], side = "both"))
-  }
-}
+parse_header <- stringparser(header_pattern, function(x) {stringr::str_trim(x[1], side = "both")})
 
 #' Parse a Tab-Separated Line
 #'

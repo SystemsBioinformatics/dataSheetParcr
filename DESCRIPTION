@@ -13,7 +13,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports: 
     dplyr,
-    parcr,
+    parcr (>= 0.5.3),
     stats,
     stringr
 Suggests: 
