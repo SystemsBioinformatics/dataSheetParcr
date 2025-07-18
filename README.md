@@ -4,7 +4,7 @@
 
 # dataSheetParcr
 
-A small R package that contains a parser for data sheets. It is currently used to parse our google sheets with the BioSB curriculum. The parser was constructed with the [`parcr`](https://CRAN.R-project.org/package=parcr) package
+A small R package that contains a parser for data sheets. It is currently used to parse our google sheets for the BioSB curriculum. The parser was constructed with the [`parcr`](https://CRAN.R-project.org/package=parcr) package
 
 ## Installation
 
