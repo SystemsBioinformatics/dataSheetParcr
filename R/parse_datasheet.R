@@ -28,7 +28,10 @@ empty_line_pattern <- "^\\s*$"
 #' @return `NULL` if the line matches an empty line or a comment.
 #' @noRd
 CommentLike <- function() {
-  (EmptyLine() %or% Comment()) %ret% NULL
+  named(
+    (EmptyLine() %or% Comment()) %ret% NULL,
+    "Comment or Empty Line"
+  )
 }
 
 #' Match Comment Lines
@@ -61,9 +64,9 @@ DataBlock <- function() {
     zero_or_more(CommentLike()) %then%
     DataTable() %then%
     zero_or_more(CommentLike())) %using%
-  function(x) {
-    stats::setNames(x[2], x[[1]])
-  }
+    function(x) {
+      stats::setNames(x[2], x[[1]])
+    }
 }
 
 #' Parse a Data Table
@@ -72,11 +75,14 @@ DataBlock <- function() {
 #' @return A tibble representing the parsed data table.
 #' @noRd
 DataTable <- function() {
-  one_or_more(DataLine()) %using%
-  function(x) {
-    do.call(rbind, x) |>
-      matrix_to_df()
-  }
+  named(
+    one_or_more(DataLine()) %using%
+      function(x) {
+        do.call(rbind, x) |>
+          matrix_to_df()
+      },
+    "Data Table"
+  )
 }
 
 #' Parse a Data Line
@@ -85,7 +91,10 @@ DataTable <- function() {
 #' @return A parsed data line as a list or `NULL` if no match is found.
 #' @noRd
 DataLine <- function() {
-  match_s(parse_tsv_line)
+  named(
+    match_s(parse_tsv_line),
+    "Data Line"
+  )
 }
 
 #' Parse a Header
@@ -94,8 +103,11 @@ DataLine <- function() {
 #' @return A list containing the parsed header.
 #' @noRd
 Header <- function() {
-  match_s(parse_header) %using%
-    function(x) list(dataname = unlist(x))
+  named(
+    match_s(parse_header) %using%
+      function(x) list(dataname = unlist(x)),
+    "Header (>header_name)"
+  )
 }
 
 #' Parse a Comment Line
@@ -112,7 +124,9 @@ parse_comment <- stringparser(comment_pattern)
 #' @param line A character string representing a line from the datasheet.
 #' @return A parsed header as a string or an empty list if parsing fails.
 #' @noRd
-parse_header <- stringparser(header_pattern, function(x) {stringr::str_trim(x[1], side = "both")})
+parse_header <- stringparser(header_pattern, function(x) {
+  stringr::str_trim(x[1], side = "both")
+})
 
 #' Parse a Tab-Separated Line
 #'
@@ -123,9 +137,9 @@ parse_header <- stringparser(header_pattern, function(x) {stringr::str_trim(x[1]
 parse_tsv_line <- function(line) {
   m <- stringr::str_split_1(line, "\t")
   if (length(m) == 1 && m[1] == "" ||
-      stringr::str_detect(m[1], header_pattern) ||
-      stringr::str_detect(m[1], comment_pattern) ||
-      stringr::str_detect(m[1], empty_line_pattern)) {
+    stringr::str_detect(m[1], header_pattern) ||
+    stringr::str_detect(m[1], comment_pattern) ||
+    stringr::str_detect(m[1], empty_line_pattern)) {
     return(list()) # signal failure
   } else {
     return(m)
