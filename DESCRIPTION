@@ -1,6 +1,6 @@
 Package: dataSheetParcr
 Title: Parse data sheets in name-header-table format
-Version: 0.1.0
+Version: 0.2.0
 Authors@R:
     person("Douwe", "Molenaar", , "d.molenaar@vu.nl", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7108-4545"))
@@ -10,10 +10,10 @@ Description: The package parses (excel) data sheets in name-header-table format.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Imports:
     dplyr,
-    parcr (>= 0.6.0),
+    parcr (>= 0.6.1),
     stats,
     stringr
 Suggests:
